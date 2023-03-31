@@ -170,6 +170,7 @@ func RegisterNativeFuncs(vm *jsonnet.VM, resolver Resolver) {
 			releaseName := args[1].(string)
 			namespace := args[2].(string)
 			vals := args[3].(map[string]interface{})
+			k8Version := args[4].(string)
 
 			reader := &ArrayReader{chartData}
 
@@ -185,7 +186,11 @@ func RegisterNativeFuncs(vm *jsonnet.VM, resolver Resolver) {
 				Revision:  1,
 				IsInstall: true,
 			}
-			values, err := chartutil.ToRenderValues(chrt, vals, options, nil)
+
+			caps := chartutil.Capabilities{
+				KubeVersion: k8Version,
+			}
+			values, err := chartutil.ToRenderValues(chrt, vals, options, caps)
 			if err != nil {
 				return nil, err
 			}
