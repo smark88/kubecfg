@@ -164,7 +164,7 @@ func RegisterNativeFuncs(vm *jsonnet.VM, resolver Resolver) {
 
 	vm.NativeFunction(&jsonnet.NativeFunction{
 		Name:   "parseHelmChart",
-		Params: []jsonnetAst.Identifier{"releaseName", "namespace", "chartData", "values"},
+		Params: []jsonnetAst.Identifier{"releaseName", "namespace", "chartData", "values", "k8Version"},
 		Func: func(args []interface{}) (interface{}, error) {
 			chartData := args[0].([]interface{})
 			releaseName := args[1].(string)
